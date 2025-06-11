@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class TransferBot {
@@ -68,35 +69,37 @@ public class TransferBot {
         Chat chat = message.chat();
         Long chatId = chat.id();
         String text = message.text();
-        String[] userWords = text.split("\\s+");
         List<String> userTeams = new ArrayList<>();
 
         if(text.startsWith("/setteam")){
 
-            if(userWords.length <= 1){
-                String warnMessage = "❗ Bir takım seçiminde bulunmadınız.\n" +
+            String[] userWords = text.substring(9).split(", ");
+
+            if(userWords.length < 1){
+                String warnMessage = "❗ Bir takım seçiminde bulunmadınız.\n\n" +
                         "❓ Takım seçiminde bulunmak adına ÖRNEK: '/setteam TakimAdi1 TakimAdi2'";
 
-                bot.execute(new SendMessage(chatId, warnMessage);
+                bot.execute(new SendMessage(chatId, warnMessage));
+
+                return;
             }
 
-            for(int i=1; i < userWords.length; i++){
-
+            for(int i=0; i < userWords.length; i++){
                 userTeams.add(userWords[i]);
             }
 
-            if(TeamList.teams.contains(userTeams)){
+            if(TeamList.teams.containsAll(userTeams.stream().map(String::toLowerCase).collect(Collectors.toList()))){
 
-                String successMessage = "Haber almak istediğiniz takimlar sisteme eklenmiştir:\n"
+                String successMessage = "Haber almak istediğiniz takimlar sisteme eklenmiştir:\n\n"
                         + "\uD83D\uDEE1\uFE0F " + userTeams;
 
                 try{
 
-                    String outputMessage = twitterApiService.findTweetForFavTeams(userTeams);
+                    String outputMessage = twitterApiService
+                            .findTweetForFavTeams(userTeams.stream().map(String::toLowerCase).collect(Collectors.toList()));
 
                     bot.execute(new SendMessage(chatId, successMessage));
-                    bot.execute(new SendMessage(chatId, outputMessage);
-
+                    bot.execute(new SendMessage(chatId, outputMessage));
 
                     storedUserTeams.put(chatId, userTeams);
 
@@ -106,14 +109,15 @@ public class TransferBot {
 
 
             }else {
-                String errorMessage = "Specified team name is not found!";
+                String errorMessage = "Belirtilen takım adı listede bulunamamıştır!";
 
                 bot.execute(new SendMessage(chatId, errorMessage));
             }
 
         }
         else{
-            String errorMessage = "Specified command is not found! If you want to set your team, use '/setteam'";
+            String errorMessage = "Belirtilen komut bulunamadı! Eğer takımınızı kaydetmek isterseniz, " +
+                    "'/setteam TakimAdi' komutunu kullanabilirsiniz.";
 
             bot.execute(new SendMessage(chatId, errorMessage));
         }
@@ -133,7 +137,8 @@ public class TransferBot {
             List<String> userTeams = userValues.getValue();
 
             try{
-                String outputMessage = twitterApiService.findTweetForFavTeams(userTeams);
+                String outputMessage = twitterApiService
+                        .findTweetForFavTeams(userTeams.stream().map(String::toLowerCase).collect(Collectors.toList()));
 
                 if (!outputMessage.isEmpty()) {
 

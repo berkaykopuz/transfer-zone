@@ -149,7 +149,7 @@ public class TwitterApiService {
         String outputMessage = "";
 
         for (TwitterUser user : TwitterUser.values()){
-            Get2UsersIdTweetsResponse result = getTweetByUser(user.getUserId(), favTeamList);
+            Get2UsersIdTweetsResponse result = getTweetByUser(user.getUserId());
 
             if(result != null){
 
@@ -178,7 +178,7 @@ public class TwitterApiService {
         return outputMessage;
     }
 
-    private Get2UsersIdTweetsResponse getTweetByUser(String userId, List<String> favTeamList){
+    private Get2UsersIdTweetsResponse getTweetByUser(String userId){
 
         String id = userId;
 
