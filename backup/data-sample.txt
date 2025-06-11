@@ -1,0 +1,137 @@
+class Get2UsersIdTweetsResponse {
+    data: [class Tweet {
+        attachments: null
+        authorId: null
+        contextAnnotations: null
+        conversationId: null
+        createdAt: null
+        editControls: null
+        editHistoryTweetIds: [1932737017613304077]
+        entities: null
+        geo: null
+        id: 1932737017613304077
+        inReplyToUserId: null
+        lang: null
+        nonPublicMetrics: null
+        organicMetrics: null
+        possiblySensitive: null
+        promotedMetrics: null
+        publicMetrics: null
+        referencedTweets: null
+        replySettings: null
+        source: null
+        text: 🚨🔵⚪️ Angel Gomes to Olympique Marseille, here we go! Medical ongoing today after deal completed.
+        
+        Gomes, in Marseille to sign a three year deal at OM after leaving Lille as free agent.
+        
+        One more important addition ahead of UCL season for OM. https://t.co/Zo1l14AEa9
+        withheld: null
+    }, class Tweet {
+        attachments: null
+        authorId: null
+        contextAnnotations: null
+        conversationId: null
+        createdAt: null
+        editControls: null
+        editHistoryTweetIds: [1932733474055557400]
+        entities: null
+        geo: null
+        id: 1932733474055557400
+        inReplyToUserId: null
+        lang: null
+        nonPublicMetrics: null
+        organicMetrics: null
+        possiblySensitive: null
+        promotedMetrics: null
+        publicMetrics: null
+        referencedTweets: null
+        replySettings: null
+        source: null
+        text: RT @FabrizioRomano: 🚨🇰🇷 Kim Min-jae has concrete chances to leave Bayern in the summer in case of good proposal for both club/player.
+        
+        He’s…
+        withheld: null
+    }, class Tweet {
+        attachments: null
+        authorId: null
+        contextAnnotations: null
+        conversationId: null
+        createdAt: null
+        editControls: null
+        editHistoryTweetIds: [1932725782314451452]
+        entities: null
+        geo: null
+        id: 1932725782314451452
+        inReplyToUserId: null
+        lang: null
+        nonPublicMetrics: null
+        organicMetrics: null
+        possiblySensitive: null
+        promotedMetrics: null
+        publicMetrics: null
+        referencedTweets: null
+        replySettings: null
+        source: null
+        text: @OzkanOPinhani Gördüğünüz gibi, bu sabah yazdıktan sonra birçok kişi yazdı... 😉🙌🏻
+        withheld: null
+    }, class Tweet {
+        attachments: null
+        authorId: null
+        contextAnnotations: null
+        conversationId: null
+        createdAt: null
+        editControls: null
+        editHistoryTweetIds: [1932725386942824674]
+        entities: null
+        geo: null
+        id: 1932725386942824674
+        inReplyToUserId: null
+        lang: null
+        nonPublicMetrics: null
+        organicMetrics: null
+        possiblySensitive: null
+        promotedMetrics: null
+        publicMetrics: null
+        referencedTweets: null
+        replySettings: null
+        source: null
+        text: @CifuenCharcopa 😏😉
+        withheld: null
+    }, class Tweet {
+        attachments: null
+        authorId: null
+        contextAnnotations: null
+        conversationId: null
+        createdAt: null
+        editControls: null
+        editHistoryTweetIds: [1932725240305451154]
+        entities: null
+        geo: null
+        id: 1932725240305451154
+        inReplyToUserId: null
+        lang: null
+        nonPublicMetrics: null
+        organicMetrics: null
+        possiblySensitive: null
+        promotedMetrics: null
+        publicMetrics: null
+        referencedTweets: null
+        replySettings: null
+        source: null
+        text: 🚨🔴🟡 Leroy Sané will become Galatasaray player on contract until June 2028, as revealed this morning!
+        
+        Deal almost agreed between parties with formal signature to follow, player’s camp in Istanbul to complete all steps.
+        
+        Here we go, soon. 💣🇹🇷 https://t.co/8HPljwplQi
+        withheld: null
+    }]
+    errors: null
+    includes: null
+    meta: class Get2UsersIdMentionsResponseMeta {
+        newestId: 1932737017613304077
+        nextToken: 7140dibdnow9c7btw4e0woq7euwchr5c3bdtwcingshtg
+        oldestId: 1932725240305451154
+        previousToken: null
+        resultCount: 5
+    }
+}
