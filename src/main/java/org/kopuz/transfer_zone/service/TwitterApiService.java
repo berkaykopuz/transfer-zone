@@ -109,42 +109,6 @@ public class TwitterApiService {
         return accessToken;
     }
 
-    /*public OAuth2AccessToken exchangeCodeForAccessToken(String code) {
-        TwitterOAuth20Service service = new TwitterOAuth20Service(
-                credentials.getTwitterOauth2ClientId(),
-                credentials.getTwitterOAuth2ClientSecret(),
-                env.getProperty("twitter.oauth.callback.url"),
-                env.getProperty("twitter.oauth.scopes")
-        );
-        PKCE pkce = new PKCE();
-        // Use dynamic PKCE values
-        String codeVerifier = generateCodeVerifier(); // Implement this method
-        pkce.setCodeChallenge(generateCodeChallenge(codeVerifier));
-        pkce.setCodeChallengeMethod(PKCECodeChallengeMethod.PLAIN); // Or S256
-        pkce.setCodeVerifier(codeVerifier);
-
-        try {
-            OAuth2AccessToken accessToken = service.getAccessToken(pkce, code);
-            tokenStorageService.updateTokens(accessToken.getAccessToken(), accessToken.getRefreshToken());
-            credentials.setTwitterOauth2AccessToken(accessToken.getAccessToken());
-            credentials.setTwitterOauth2RefreshToken(accessToken.getRefreshToken());
-            return accessToken;
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to exchange code for access token", e);
-        }
-    }
-
-    private String generateCodeVerifier() {
-        SecureRandom sr = new SecureRandom();
-        byte[] code = new byte[32];
-        sr.nextBytes(code);
-        return Base64.getUrlEncoder().withoutPadding().encodeToString(code);
-    }
-
-    private String generateCodeChallenge(String codeVerifier) {
-        return codeVerifier; // For PLAIN method; use SHA-256 for S256
-    }*/
-
     public String findTweetForFavTeams(List<String> favTeamList){
 
         String outputMessage = "";
