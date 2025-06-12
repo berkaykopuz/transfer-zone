@@ -45,7 +45,7 @@ Start a conversation with [@botfather](https://t.me/botfather) in Telegram 1.
 4. Set a user name for bot
 5. Botfather will give you a ** API token **, this is your Telegram Token that is mentioned above.
 
-### 2. Telegram Kanal ID'si Alma
+### 2. Creation of Twitter Developer Account
 
 Open your browser and go to: https://developer.twitter.com
 
