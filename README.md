@@ -27,9 +27,9 @@ You need one of the following options for bot to work continuously:
 
 2. **Personal Computer**
 
-   - It must remain open 24/7
-   - Internet connection should be continuous
-   - The computer should be prevented from switching to sleep mode
+  - It must remain open 24/7
+  - Internet connection should be continuous
+  - The computer should be prevented from switching to sleep mode
 
 ## 🛠️ Instructions
 
