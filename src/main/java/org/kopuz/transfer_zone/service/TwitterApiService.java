@@ -10,17 +10,11 @@ import com.twitter.clientlib.auth.TwitterOAuth20Service;
 import com.twitter.clientlib.model.Get2UsersIdTweetsResponse;
 import com.twitter.clientlib.model.Tweet;
 import org.kopuz.transfer_zone.entity.TwitterUser;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
-
-import java.security.SecureRandom;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 

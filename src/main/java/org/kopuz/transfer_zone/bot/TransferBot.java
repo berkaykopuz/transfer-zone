@@ -44,6 +44,7 @@ public class TransferBot {
     public void init() {
 
         bot.setUpdatesListener(updates -> {
+
             for (Update update : updates) {
                 handleUpdate(update);
             }
@@ -75,14 +76,19 @@ public class TransferBot {
             if(text.startsWith("/setteam")){
 
                 if(storedUserTeams.containsKey(chatId)){
-                    
+                    String warnMessage = "❗ Zaten kaydınız bulunmakta.\n\n" +
+                            "❓ Silmek için ÖRNEK: '/deleteAll'";
+
+                    bot.execute(new SendMessage(chatId, warnMessage));
+
+                    return;
                 }
 
                 String[] userWords = text.substring(9).split(", ");
 
                 if(userWords.length < 1){
                     String warnMessage = "❗ Bir takım seçiminde bulunmadınız.\n\n" +
-                            "❓ Takım seçiminde bulunmak adına ÖRNEK: '/setteam TakimAdi1 TakimAdi2'";
+                            "❓ Takım seçiminde bulunmak adına ÖRNEK: '/setteam TakimAdi1, TakimAdi2'";
 
                     bot.execute(new SendMessage(chatId, warnMessage));
 
@@ -143,12 +149,14 @@ public class TransferBot {
                     userTeams.add(userWords[i]);
                 }
 
-                String warnMessage = "❗ Belirttiğiniz takımlar sistemden kaldırılmış ve program " +
-                        "kapatılmıştır. \n Kaldırılan takımlar: \uD83D\uDEE1\uFE0F " + userTeams;
+                String warnMessage = "❗ Belirttiğiniz takımlar sistemden kaldırılmıştır" +
+                        "\n Kaldırılan takımlar: \uD83D\uDEE1\uFE0F " + userTeams;
 
                 userTeams.stream().forEach(team -> {
                     storedUserTeams.get(chatId).remove(team);
                 });
+
+                bot.execute(new SendMessage(chatId, warnMessage));
 
             } else{
 
