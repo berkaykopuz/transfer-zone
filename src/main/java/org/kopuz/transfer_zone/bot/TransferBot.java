@@ -71,55 +71,95 @@ public class TransferBot {
         String text = message.text();
         List<String> userTeams = new ArrayList<>();
 
-        if(text.startsWith("/setteam")){
+        try{
+            if(text.startsWith("/setteam")){
 
-            String[] userWords = text.substring(9).split(", ");
+                if(storedUserTeams.containsKey(chatId)){
+                    
+                }
 
-            if(userWords.length < 1){
-                String warnMessage = "❗ Bir takım seçiminde bulunmadınız.\n\n" +
-                        "❓ Takım seçiminde bulunmak adına ÖRNEK: '/setteam TakimAdi1 TakimAdi2'";
+                String[] userWords = text.substring(9).split(", ");
 
-                bot.execute(new SendMessage(chatId, warnMessage));
+                if(userWords.length < 1){
+                    String warnMessage = "❗ Bir takım seçiminde bulunmadınız.\n\n" +
+                            "❓ Takım seçiminde bulunmak adına ÖRNEK: '/setteam TakimAdi1 TakimAdi2'";
 
-                return;
-            }
+                    bot.execute(new SendMessage(chatId, warnMessage));
 
-            for(int i=0; i < userWords.length; i++){
-                userTeams.add(userWords[i]);
-            }
+                    return;
+                }
 
-            if(TeamList.teams.containsAll(userTeams.stream().map(String::toLowerCase).collect(Collectors.toList()))){
+                for(int i=0; i < userWords.length; i++){
+                    userTeams.add(userWords[i]);
+                }
 
-                String successMessage = "Haber almak istediğiniz takimlar sisteme eklenmiştir:\n\n"
-                        + "\uD83D\uDEE1\uFE0F " + userTeams;
+                if(TeamList.teams.containsAll(userTeams.stream().map(String::toLowerCase).collect(Collectors.toList()))){
 
-                try{
+                    String successMessage = "Haber almak istediğiniz takimlar sisteme eklenmiştir:\n\n"
+                            + "\uD83D\uDEE1\uFE0F " + userTeams;
+
 
                     String outputMessage = twitterApiService
-                            .findTweetForFavTeams(userTeams.stream().map(String::toLowerCase).collect(Collectors.toList()));
+                                .findTweetForFavTeams(userTeams.stream().map(String::toLowerCase).collect(Collectors.toList()));
 
-                    bot.execute(new SendMessage(chatId, successMessage));
-                    bot.execute(new SendMessage(chatId, outputMessage));
+                    if(outputMessage == null){
+                        bot.execute(new SendMessage(chatId, successMessage));
+                    } else{
+                        bot.execute(new SendMessage(chatId, successMessage));
+                        bot.execute(new SendMessage(chatId, outputMessage));
+                    }
 
                     storedUserTeams.put(chatId, userTeams);
 
-                }catch (Exception e){
-                    e.printStackTrace();
+                }else {
+                    String errorMessage = "❗ Belirtilen takım adı listede bulunamamıştır!";
+
+                    bot.execute(new SendMessage(chatId, errorMessage));
+
                 }
 
+            } else if (text.startsWith("/deleteAll")) {
 
-            }else {
-                String errorMessage = "Belirtilen takım adı listede bulunamamıştır!";
+                    String warnMessage = "❗ Takım tercihleriniz sistemden kaldırılmış ve program " +
+                            "kapatılmıştır. Dilerseniz yeniden kaydederek programı başlatabilirsiniz.";
+
+                    storedUserTeams.remove(chatId);
+
+                    bot.execute(new SendMessage(chatId, warnMessage));
+
+            } else if (text.startsWith("/delete")) {
+                String[] userWords = text.substring(8).split(", ");
+
+                if(userWords.length < 1){
+                    String warnMessage = "❗ Silinecek bir takım seçiminde bulunmadınız.\n\n" +
+                            "❓ Takım seçiminde bulunmak adına ÖRNEK: '/delete TakimAdi1 TakimAdi2'";
+
+                    bot.execute(new SendMessage(chatId, warnMessage));
+
+                    return;
+                }
+
+                for(int i=0; i < userWords.length; i++){
+                    userTeams.add(userWords[i]);
+                }
+
+                String warnMessage = "❗ Belirttiğiniz takımlar sistemden kaldırılmış ve program " +
+                        "kapatılmıştır. \n Kaldırılan takımlar: \uD83D\uDEE1\uFE0F " + userTeams;
+
+                userTeams.stream().forEach(team -> {
+                    storedUserTeams.get(chatId).remove(team);
+                });
+
+            } else{
+
+                String errorMessage = "❗ Belirtilen komut bulunamadı! Eğer takımınızı kaydetmek isterseniz, " +
+                        "'/setteam TakimAdi' komutunu kullanabilirsiniz.";
 
                 bot.execute(new SendMessage(chatId, errorMessage));
+
             }
-
-        }
-        else{
-            String errorMessage = "Belirtilen komut bulunamadı! Eğer takımınızı kaydetmek isterseniz, " +
-                    "'/setteam TakimAdi' komutunu kullanabilirsiniz.";
-
-            bot.execute(new SendMessage(chatId, errorMessage));
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
     }
@@ -140,13 +180,10 @@ public class TransferBot {
                 String outputMessage = twitterApiService
                         .findTweetForFavTeams(userTeams.stream().map(String::toLowerCase).collect(Collectors.toList()));
 
-                if (!outputMessage.isEmpty()) {
+                if(outputMessage == null) return;
 
-                    bot.execute(new SendMessage(chatId, outputMessage));
+                bot.execute(new SendMessage(chatId, outputMessage));
 
-                } else {
-                    // logger message comes here
-                }
             }catch (Exception e){
                 e.printStackTrace();
             }

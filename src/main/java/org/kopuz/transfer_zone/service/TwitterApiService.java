@@ -38,6 +38,7 @@ public class TwitterApiService {
     private final String clientId;
 
     private final String clientSecret;
+    private int sequence = 0;
 
 
     public TwitterApiService(TokenStorageService tokenStorageService, Environment env) {
@@ -148,14 +149,16 @@ public class TwitterApiService {
 
         String outputMessage = "";
 
-        for (TwitterUser user : TwitterUser.values()){
+        TwitterUser user = TwitterUser.valueOf(TwitterUser.authorNames[sequence]);
+
+
             Get2UsersIdTweetsResponse result = getTweetByUser(user.getUserId());
 
-            if(result != null){
+            if(result != null && result.getData() != null){
 
                 String author = user.name() + ": ";
 
-                outputMessage += "✈\uD83D\uDD25 İşte Güncel Transfer Söylentileri\n";
+                outputMessage += "✈\uD83D\uDD25 İşte Güncel Transfer Söylentileri\n\n";
 
                 List<Tweet> filteredTweets = result.getData().stream().filter(tweet -> {
                     String tweetText = tweet.getText().toLowerCase();
@@ -163,17 +166,22 @@ public class TwitterApiService {
                     return favTeamList.stream().anyMatch(team -> tweetText.contains(team));
                 }).collect(Collectors.toList());
 
+                if(filteredTweets.isEmpty()) return null; // Check if any tweet is found for specified teams.
+
                 List<String> filteredTweetTexts = filteredTweets.stream().map(tweet -> {
                     return tweet.getText();
                 }).collect(Collectors.toList());
 
 
+
                 for (String filteredTweetText:
                         filteredTweetTexts) {
-                    outputMessage += author  + filteredTweetText + "\n";
+                    outputMessage += author  + filteredTweetText + "\n\n";
                 }
             }
-        }
+
+        if(sequence == TwitterUser.authorNames.length - 1) sequence = 0;
+        else sequence++;
 
         return outputMessage;
     }
